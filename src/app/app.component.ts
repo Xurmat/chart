@@ -1,10 +1,8 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit } from '@angular/core';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { ApexNonAxisChartSeries, ApexChart, ApexDataLabels, ApexLegend, ApexTitleSubtitle
-} from 'ng-apexcharts';
+import { ApexNonAxisChartSeries, ApexChart, ApexDataLabels, ApexLegend, ApexTitleSubtitle } from 'ng-apexcharts';
 import { HttpClientModule } from '@angular/common/http';
-import { HttpClient, provideHttpClient } from '@angular/common/http';
-import {  } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -23,25 +21,29 @@ export class AppComponent implements OnInit {
     chart: ApexChart;
     labels: string[];
     dataLabels: ApexDataLabels;
-    legend:ApexLegend;
-    chartTitle:ApexTitleSubtitle
+    legend: ApexLegend;
+    chartTitle: ApexTitleSubtitle;
   };
 
-  constructor(private _http: HttpClient){
+  constructor(private _http: HttpClient) {
     this.chartOptions = {
-      series: [10,20, 30, 40, 50],
+      series: [10, 20, 30, 40, 50],
       chart: {
-        type: 'pie',
+        type: 'donut',
         height: 350,
       },
-      labels: ["google", "google", "google", "google", "google"],
+      labels: ["google", "Meta", "Youtube", "Telegram ", "google"],
       dataLabels: {
-        enabled: false,
+        enabled: true,
+        formatter: (val, opts) => {
+          return opts.w.config.series[opts.seriesIndex];
+        }
       },
       legend: {
-        position:'bottom'
+        position: 'right',
+        offsetX: 350
       },
-      chartTitle:{
+      chartTitle: {
         text: "Problems statistics by topic",
         align: 'center'
       }
@@ -52,20 +54,20 @@ export class AppComponent implements OnInit {
     this.fetchData();
   }
 
-  fetchData(){
+  fetchData() {
     this._http.get(this.API_URL).subscribe({
       next: (res) => {
-        if(res && Array.isArray(res)){
+        if (res && Array.isArray(res)) {
           this.getChartData(res);
         }
       },
       error: (err) => {
         console.log(err);
       }
-    })
+    });
   }
 
-  getChartData(data: any[]){
+  getChartData(data: any[]) {
     this.chartOptions.labels.length = 0;
     this.chartOptions.series.length = 0;
 

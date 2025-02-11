@@ -22,15 +22,14 @@ export class AppComponent implements OnInit {
     labels: string[];
     dataLabels: ApexDataLabels;
     legend: ApexLegend;
-    chartTitle: ApexTitleSubtitle;
   };
 
   constructor(private _http: HttpClient) {
     this.chartOptions = {
       series: [10, 20, 30, 40, 50],
       chart: {
-        type: 'donut',
-        height: 350,
+        type: 'pie',
+        height: 450,
       },
       labels: ["google", "Meta", "Youtube", "Telegram ", "google"],
       dataLabels: {
@@ -41,11 +40,7 @@ export class AppComponent implements OnInit {
       },
       legend: {
         position: 'right',
-        offsetX: 350
-      },
-      chartTitle: {
-        text: "Problems statistics by topic",
-        align: 'center'
+        offsetX: 200
       }
     };
   }

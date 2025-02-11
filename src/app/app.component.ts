@@ -39,8 +39,7 @@ export class AppComponent implements OnInit {
         }
       },
       legend: {
-        position: 'right',
-        offsetX: 200
+        position: 'top',
       }
     };
   }
